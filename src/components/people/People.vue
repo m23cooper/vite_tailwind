@@ -37,27 +37,27 @@
 
 
 <template>
-  <h1>People</h1>
-  <table class="people_table" v-for="person in people">
+  <h1 class="font-bold">People</h1>
+  <table id="people__table" class="table-auto border-collapse border border-slate-400 w-screen content-start">
+    <thead>
     <tr>
-      <td>{{ person.name }}</td>
-      <td>{{ person.gender }}</td>
-      <td>{{ person.homeworld }}</td>
-      <td>{{ person.eye_color }}</td>
+      <th>Name</th>
+      <th>Gender</th>
+      <th>Homeworld</th>
+      <th>Eye Colour</th>
     </tr>
+    </thead>
+    <tbody v-for="person in people">
+      <tr class="border border-slate-200">
+        <td>{{ person.name }}</td>
+        <td>{{ person.gender }}</td>
+        <td>{{ person.homeworld }}</td>
+        <td>{{ person.eye_color }}</td>
+      </tr>
+    </tbody>
   </table>
 </template>
 
 
 <style scoped>
-  .people_table {
-    width: 100%;
-    border: 2px solid #000;
-    table-border-color-dark: #000;
-    color: blue;
-  }
-  td {
-    WIDTH: 25%;
-
-  }
 </style>
