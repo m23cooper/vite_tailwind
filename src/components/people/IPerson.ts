@@ -1,5 +1,7 @@
 export default interface IPerson
 {
 	name?: string,
-	skin_color: string,
+	gender?: string,
+	homeworld?: string,
+	eye_color?: string,
 }
