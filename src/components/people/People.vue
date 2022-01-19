@@ -1,27 +1,31 @@
 <script setup lang="ts">
-  import  {Ref, ref } from 'vue';
+  //  Library imports
+  import { Ref, ref } from 'vue';
   import { onMounted, onUpdated, onUnmounted } from 'vue';
+
+  //  Project imports
   import IPerson from "./IPerson";
 
-  // const props:object = {name: string};
-  //
-  // defineProps<{name: string}>();
 
-  let people:Ref<IPerson> = ref({skin_color: "fair"});
+  // defineProps<{
+    // name: string,
+  // }>();
 
-  async function getPeople():Promise<any>
-  {
-    console.log('getPeople!');
-    let promise = await fetch("https://swapi.dev/api/people/");
+  const people:Ref<IPerson[]> = ref([{}]);
 
-    const peeps = await promise.json();
+  let promise = fetch("https://swapi.dev/api/people/")
+      .then(async (promise) => {
 
-    people.value = peeps.results;
-  }
+        const peeps = await promise.json();
+
+        people.value = peeps.results as IPerson[];
+      })
+      .catch((error: any) => {
+        console.log("Error caught");
+      });
 
   onMounted(() => {
     console.log('mounted!');
-    getPeople();
   })
   onUpdated(() => {
     console.log('updated!')
@@ -30,6 +34,7 @@
     console.log('unmounted!')
   })
 </script>
+
 
 <template>
   <h1>People</h1>
@@ -50,5 +55,9 @@
     border: 2px solid #000;
     table-border-color-dark: #000;
     color: blue;
+  }
+  td {
+    WIDTH: 25%;
+
   }
 </style>
