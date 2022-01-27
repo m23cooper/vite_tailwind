@@ -1,20 +1,20 @@
-<script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import People from './components/people/People.vue'
-</script>
+<!--  Generated from VueView template-->
 
 <template>
-  <People></People>
+  <div id="App" class="flex p-4 m-4 border border-stone-800 bg-amber-700">
+    <PeopleView class="text-white" alias="peep"></PeopleView>
+  </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<!------------------------------------------------------------------------------------------------->
+
+<script setup lang="ts">
+  import PeopleView from "./views/people/PeopleView.vue";
+
+</script>
+
+<!------------------------------------------------------------------------------------------------->
+
+<style scoped>
+
 </style>
