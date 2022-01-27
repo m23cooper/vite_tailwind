@@ -1,0 +1,72 @@
+<!--  Generated from Vue Component template-->
+
+<template>
+  <div class="">
+    <p class="font-bold">PersonComponent {{ alias }}</p>
+  </div>
+</template>
+
+<!------------------------------------------------------------------------------------------------->
+
+<script setup lang="ts">
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Library imports
+  import { Ref, ref } from 'vue';
+  // import { onMounted, onUpdated, onUnmounted } from 'vue';
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Local imports
+  // import IPerson from "./IPerson";
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Props
+  interface Props {
+    alias?: string;
+  }
+
+  const props:Readonly<Props> = withDefaults(defineProps<Props>(), {
+    alias: "PersonComponent",
+  });
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Emits
+  // const emit = defineEmits(['change', 'delete']);
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Private
+  const _name: string = "PersonComponent";
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Methods
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Hooks
+  // onMounted(() => {
+  //   console.log(`PersonComponent mounted!`);
+  // })
+  // onUpdated(() => {
+  //   console.log(`PersonComponent updated!`);
+  // })
+  // onUnmounted(() => {
+  //   console.log(`PersonComponent unmounted!`);
+  // })
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //  Public
+  defineExpose({
+    name: _name,
+  });
+
+</script>
+
+<!------------------------------------------------------------------------------------------------->
+
+<style scoped>
+
+</style>
