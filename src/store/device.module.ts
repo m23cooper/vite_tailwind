@@ -1,7 +1,7 @@
 import Bowser from "bowser";
 import _ from "lodash-es";
 
-import { MutationTypes as mutate } from './mutation-types';
+import { MutationTypes as mutate } from './mutation';
 
 // import { skin } from '~config';
 

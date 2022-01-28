@@ -1,6 +1,6 @@
 export enum MutationTypes
 {
-//  ui
+	//  ui
 	CLEAR_UI = 'CLEAR_UI',
 
 	//  header
