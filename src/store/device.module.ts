@@ -1,12 +1,32 @@
+// Generated from Vuex Module template
+
+import { fromPairs, map } from "lodash-es";
+
+import {ActionContext, ActionTree, createLogger, createStore, GetterTree, MutationTree} from "vuex";
+
+import {ActionTypes as action} from "./actions";
+import {MutationTypes as mutate} from "./mutation";
 import Bowser from "bowser";
-import _ from "lodash-es";
 
-import { MutationTypes as mutate } from './mutation';
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//  STATE
+interface IState
+{
+	isMobile: boolean;
+	isiOS: boolean;
+	isIE11: boolean;
+	isFirefox: boolean;
+	isSafariBrowser: boolean;
+	isSM: boolean;
+	isMD: boolean;
+	isLG: boolean;
+	isXL: boolean;
+	isPortrait: boolean;
+	isLandscape: boolean;
+	urlParams: any,
+}
 
-// import { skin } from '~config';
-
-// initial state
-const state = () => ({
+const _state:IState = {
 	isMobile: false,
 	isiOS: false,
 	isIE11: false,
@@ -19,27 +39,38 @@ const state = () => ({
 	isPortrait: false,
 	isLandscape: false,
 	urlParams: {},
-});
-
-// getters
-const getters = {
-	isMobile: (state, getters) => state.isMobile,
-	isiOS: (state, getters) => state.isiOS,
-	isIE11: (state, getters) => state.isIE11,
-	isFirefox: (state, getters) => state.isFirefox,
-	isSafariBrowser: (state, getters) => state.isSafariBrowser,
-	isSM: (state, getters) => state.isSM,
-	isMD: (state, getters) => state.isMD,
-	isLG: (state, getters) => state.isLG,
-	isXL: (state, getters) => state.isXL,
-	isPortrait: (state, getters) => state.isPortrait,
-	isLandscape: (state, getters) => state.isLandscape,
-	urlParams: (state, getters) => state.urlParams,
 };
 
-// actions
-const actions = {
-	initDevice ({ commit, state, })
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//  GETTERS
+
+// type Getters = createMutableType<IState>;
+interface IGetters {
+
+}
+
+const _getters: GetterTree<any, any> & IGetters = {
+
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//  ACTIONS
+
+type AugmentedActionContext = {
+	commit<K extends keyof IMutations>(
+		key: K,
+		payload: Parameters<IMutations[K]>[1]
+	): ReturnType<IMutations[K]>
+	} & Omit<ActionContext<IState, IState>, 'commit'>
+
+interface IActions {
+	[action.INIT_DEVICE](
+		{ commit }: AugmentedActionContext,
+	): void,
+}
+
+const _actions: ActionTree<any, any> & IActions = {
+	[action.INIT_DEVICE] ({ commit, } )
 	{
 		console.log("initDevice");
 		[
@@ -47,67 +78,67 @@ const actions = {
 			{test: "(min-width: 768px)", mutation: mutate.IS_MD_UPDATED,},
 			{test: "(min-width: 1057px)", mutation: mutate.IS_LG_UPDATED,},
 			{test: "(min-width: 1234px)", mutation: mutate.IS_XL_UPDATED,},
-		].map(breakpoint => {
+		].map((breakpoint:any) => {
 			breakpoint.check = window.matchMedia(breakpoint.test);
-			breakpoint.check.addListener((mediaQueryList) => commit(breakpoint.mutation, {mediaQueryList: mediaQueryList, }));
+			breakpoint.check.addListener((mediaQueryList:any) => commit(breakpoint.mutation, {mediaQueryList: mediaQueryList, }));
 			commit(breakpoint.mutation, {mediaQueryList: breakpoint.check, });
 		});
 
 		[
 			{test: "(orientation: portrait)", mutation: mutate.IS_PORTRAIT,},
 			{test: "(orientation: landscape)", mutation: mutate.IS_LANDSCAPE,},
-		].map(orientation => {
+		].map((orientation:any) => {
 			orientation.check = window.matchMedia(orientation.test);
-			orientation.check.addListener((mediaQueryList) => commit(orientation.mutation, {mediaQueryList: mediaQueryList, }));
+			orientation.check.addListener((mediaQueryList:any) => commit(orientation.mutation, {mediaQueryList: mediaQueryList, }));
 			commit(orientation.mutation, {mediaQueryList: orientation.check, });
 		});
 
 		const query = window.location.search.substring(1);
-		const params = _.fromPairs(_.map(query.split("&"), param => param.split("=")));
+		const params = fromPairs(map(query.split("&"), (param:any) => param.split("=")));
 
 		commit(mutate.URL_PARAMS_UPDATED, {params: params,});
 
 		commit(mutate.DEVICE_UPDATED, {outputs: Bowser.parse(window.navigator.userAgent),});
+
 	},
 };
 
-// mutations
-const mutations = {
-	[mutate.IS_SM_UPDATED] (state, { mediaQueryList, }) {
-		state.isSM = mediaQueryList.matches;
-	},
-	[mutate.IS_MD_UPDATED] (state, { mediaQueryList, }) {
-		state.isMD = mediaQueryList.matches;
-	},
-	[mutate.IS_LG_UPDATED] (state, { mediaQueryList, }) {
-		state.isLG = mediaQueryList.matches;
-	},
-	[mutate.IS_XL_UPDATED] (state, { mediaQueryList, }) {
-		state.isXL = mediaQueryList.matches;
-	},
-	[mutate.IS_PORTRAIT] (state, { mediaQueryList, }) {
-		state.isLandscape = !(state.isPortrait = mediaQueryList.matches);
-	},
-	[mutate.IS_LANDSCAPE] (state, { mediaQueryList, }) {
-		state.isPortrait = !(state.isLandscape = mediaQueryList.matches);
-	},
-	[mutate.URL_PARAMS_UPDATED] (state, { params, }) {
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//  IMutations
+interface IMutations<S = IState>{
+	[mutate.URL_PARAMS_UPDATED] (state:S, payload:any):void;
+	[mutate.DEVICE_UPDATED] (state:S, payload:any):void;
+}
+
+const _mutations: MutationTree<any> & IMutations = {
+	[mutate.URL_PARAMS_UPDATED] (state: IState, params:any)
+	{
 		state.urlParams = params;
 	},
-	[mutate.DEVICE_UPDATED] (state, { outputs, }) {
+	[mutate.DEVICE_UPDATED] (state: IState, outputs:any) {
 		state.isMobile = (outputs.platform.type === "mobile");
 		state.isiOS = (outputs.os.name === "iOS");
 		state.isFirefox = (outputs.browser.name === "Firefox");
 		state.isSafariBrowser = (outputs.browser.name === "Safari");
-		state.isIE11 = (Object.hasOwnProperty.call(window, "ActiveXObject") && !window.ActiveXObject);
-		let test = 0;
+		// state.isIE11 = (Object.hasOwnProperty.call(window, "ActiveXObject") && !window.ActiveXObject);
 	},
 };
 
-export default {
-	// namespaced: true,
-	state,
-	getters,
-	actions,
-	mutations,
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//  modules
+const _modules = {
+	// device
 };
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//  CONSTRUCTOR
+export default {
+	name:"device.module",
+	namespaced: true,
+	state: () => _state,
+	getters: _getters,
+	actions: _actions,
+	mutations: _mutations,
+	modules: _modules,
+};
+

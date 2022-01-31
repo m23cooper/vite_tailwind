@@ -14,12 +14,12 @@ export interface IPlayer
 export class PlayerVO implements IPlayer
 {
 	readonly id:string = "";
-	readonly alias:string = "";
+	alias:string = "";
 	readonly games:IGame[] = [];
 	readonly factions:IFaction[] = [];
 	readonly armies:IArmy[] = [];
 
-	constructor(data: object)
+	constructor(data: IPlayer)
 	{
 		Object.assign(this, data);
 	}

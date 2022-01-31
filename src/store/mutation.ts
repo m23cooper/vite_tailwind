@@ -3,9 +3,8 @@ export enum MutationTypes
 	//  ui
 	CLEAR_UI = 'CLEAR_UI',
 
-	//  header
-
-	//  game
+	//  player.module
+	SET_PLAYER = 'SET_PLAYER',
 
 	//  device
 	IS_SM_UPDATED = 'IS_SM_UPDATED',

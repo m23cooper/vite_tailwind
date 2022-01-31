@@ -6,15 +6,17 @@ import {
 	ActionTree, ActionContext,
 	Store as VuexStore,
 	CommitOptions,
-	DispatchOptions,} from 'vuex'
-import { IPlayer, PlayerVO} from "../model/player"
+	DispatchOptions,
+} from 'vuex'
 import device from "./device.module";
+import player from "./player.module";
 
 
 import { MutationTypes as mutate } from './mutation';
 import { ActionTypes as action } from './actions';
 
 import { config } from '../config';
+import { createType, createMutableType } from "../utils/utils";
 
 // const debug = process.env.NODE_ENV !== 'production'
 const debug = true;
@@ -23,45 +25,51 @@ const debug = true;
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  STATE
 
-const _state = {
+interface IState
+{
+	readonly _privateKey: string;
+	isFullscreen: boolean;
+}
+
+const _state:IState = {
+	_privateKey: "THIS IS PRIVATE",
+
 	isFullscreen: false,
 };
 
-type State = typeof _state;
-let test = typeof _state;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  GETTERS
-type  Getters = {
-	isFullscreen(state: State): number
-}
-// const _getters: GetterTree<State, State> & Getters = {
-// 	isFullscreen: (state:State) => state.isFullscreen,
-// };
 
-const _getters: Getters = {
-	isFullscreen: (state:State) => state.isFullscreen,
+// type Getters = createMutableType<IState>;
+interface IGetters {
+	isFullscreen(state:IState):void
+}
+
+const _getters: GetterTree<any, any> & IGetters = {
+	isFullscreen: (state:IState) => state.isFullscreen,
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  ACTIONS
 type AugmentedActionContext = {
-	commit<K extends keyof Mutations>(
+	commit<K extends keyof IMutations>(
 		key: K,
-		payload: Parameters<Mutations[K]>[1]
-	): ReturnType<Mutations[K]>
-} & Omit<ActionContext<State, State>, 'commit'>
+		payload: Parameters<IMutations[K]>[1]
+	): ReturnType<IMutations[K]>
+} & Omit<ActionContext<IState, IState>, 'commit'>
 
 interface Actions {
 	[action.CLEAR_UI](
 		{ commit }: AugmentedActionContext,
-		payload: number
+		payload: any
 	): Promise<number>,
 }
 
-const _actions: ActionTree<State, State> & Actions = {
-	[action.CLEAR_UI] ({ commit, }, payload:number )
+const _actions: ActionTree<any, any> & Actions = {
+	[action.CLEAR_UI] ({ commit, }, payload:any )
 	{
+		console.log("action CLEAR_UI", payload.alias);
 		return new Promise((resolve) => {
 			commit(mutate.CLEAR_UI, payload);
 			resolve(payload);
@@ -71,28 +79,27 @@ const _actions: ActionTree<State, State> & Actions = {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  Mutations
-type Mutations<S = State> = {
-	[mutate.CLEAR_UI] (state:S, payload:number):void
+interface IMutations<S = IState>  {
+	[mutate.CLEAR_UI] (state:S, payload:any):void,
 }
 
-const _mutations: MutationTree<State> & Mutations = {
-	[mutate.CLEAR_UI] (state: State, payload:number) {
-		// if(state.showBingoView) state.showBingoView = false;
-		// if(state.showGameView) state.showGameView = false;
-		// if(state.isFullscreen) state.isFullscreen = false;
+const _mutations: MutationTree<any> & IMutations = {
+	[mutate.CLEAR_UI] (state: IState, payload:any) {
+		console.log ("CLEAR_UI", payload.alias);
 	},
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  modules
 const _modules = {
-	// device
+	device,
+	player,
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  CONSTRUCTOR
 export default createStore({
-	state: _state,
+	state: () => _state,
 	getters: _getters,
 	actions: _actions,
 	mutations: _mutations,
