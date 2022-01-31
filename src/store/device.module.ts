@@ -1,12 +1,11 @@
 // Generated from Vuex Module template
 
-import { fromPairs, map } from "lodash-es";
-
-import {ActionContext, ActionTree, createLogger, createStore, GetterTree, MutationTree} from "vuex";
+import Bowser from "bowser";
+import {ActionContext, ActionTree, GetterTree, MutationTree} from "vuex";
+import { fromPairs as _fromPairs, map as _map} from "lodash-es";
 
 import {ActionTypes as action} from "./actions";
 import {MutationTypes as mutate} from "./mutation";
-import Bowser from "bowser";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  STATE
@@ -54,6 +53,50 @@ const _getters: GetterTree<any, any> & IGetters = {
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
+//  IMutations
+interface IMutations<S = IState>{
+	[mutate.IS_SM_UPDATED] (state:S, mediaQueryList:any):void;
+	[mutate.IS_MD_UPDATED] (state:S, mediaQueryList:any):void;
+	[mutate.IS_LG_UPDATED] (state:S, mediaQueryList:any):void;
+	[mutate.IS_XL_UPDATED] (state:S, mediaQueryList:any):void;
+	[mutate.IS_PORTRAIT] (state:S, mediaQueryList:any):void;
+	[mutate.IS_LANDSCAPE] (state:S, mediaQueryList:any):void;
+	[mutate.URL_PARAMS_UPDATED] (state:S, payload:any):void;
+	[mutate.DEVICE_UPDATED] (state:S, payload:any):void;
+}
+
+const _mutations: MutationTree<any> & IMutations = {
+	[mutate.IS_SM_UPDATED] (state:IState, { mediaQueryList, }) {
+		state.isSM = mediaQueryList.matches;
+	},
+	[mutate.IS_MD_UPDATED] (state:IState, { mediaQueryList, }) {
+		state.isMD = mediaQueryList.matches;
+	},
+	[mutate.IS_LG_UPDATED] (state:IState, { mediaQueryList, }) {
+		state.isLG = mediaQueryList.matches;
+	},
+	[mutate.IS_XL_UPDATED] (state:IState, { mediaQueryList, }) {
+		state.isXL = mediaQueryList.matches;
+	},
+	[mutate.IS_PORTRAIT] (state:IState, { mediaQueryList, }) {
+		state.isLandscape = !(state.isPortrait = mediaQueryList.matches);
+	},
+	[mutate.IS_LANDSCAPE] (state:IState, { mediaQueryList, }) {
+		state.isPortrait = !(state.isLandscape = mediaQueryList.matches);
+	},
+	[mutate.URL_PARAMS_UPDATED] (state: IState, params:any)	{
+		state.urlParams = params;
+	},
+	[mutate.DEVICE_UPDATED] (state: IState, outputs:any) {
+		state.isMobile = (outputs.platform?.type === "mobile");
+		state.isiOS = (outputs.os?.name === "iOS");
+		state.isFirefox = (outputs.browser?.name === "Firefox");
+		state.isSafariBrowser = (outputs.browser?.name === "Safari");
+		// state.isIE11 = (Object.hasOwnProperty.call(window, "ActiveXObject") && !window.ActiveXObject);
+	},
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
 //  ACTIONS
 
 type AugmentedActionContext = {
@@ -94,33 +137,12 @@ const _actions: ActionTree<any, any> & IActions = {
 		});
 
 		const query = window.location.search.substring(1);
-		const params = fromPairs(map(query.split("&"), (param:any) => param.split("=")));
+		const params = _fromPairs(_map(query.split("&"), (param:any) => param.split("=")));
 
 		commit(mutate.URL_PARAMS_UPDATED, {params: params,});
 
 		commit(mutate.DEVICE_UPDATED, {outputs: Bowser.parse(window.navigator.userAgent),});
 
-	},
-};
-
-//////////////////////////////////////////////////////////////////////////////////////////////////
-//  IMutations
-interface IMutations<S = IState>{
-	[mutate.URL_PARAMS_UPDATED] (state:S, payload:any):void;
-	[mutate.DEVICE_UPDATED] (state:S, payload:any):void;
-}
-
-const _mutations: MutationTree<any> & IMutations = {
-	[mutate.URL_PARAMS_UPDATED] (state: IState, params:any)
-	{
-		state.urlParams = params;
-	},
-	[mutate.DEVICE_UPDATED] (state: IState, outputs:any) {
-		state.isMobile = (outputs.platform.type === "mobile");
-		state.isiOS = (outputs.os.name === "iOS");
-		state.isFirefox = (outputs.browser.name === "Firefox");
-		state.isSafariBrowser = (outputs.browser.name === "Safari");
-		// state.isIE11 = (Object.hasOwnProperty.call(window, "ActiveXObject") && !window.ActiveXObject);
 	},
 };
 
@@ -133,12 +155,12 @@ const _modules = {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  CONSTRUCTOR
 export default {
-	name:"device.module",
-	namespaced: true,
+	name:"device",
+	// namespaced: true,
 	state: () => _state,
 	getters: _getters,
-	actions: _actions,
 	mutations: _mutations,
+	actions: _actions,
 	modules: _modules,
 };
 

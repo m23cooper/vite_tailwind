@@ -8,8 +8,8 @@ import {
 	CommitOptions,
 	DispatchOptions,
 } from 'vuex'
-import device from "./device.module";
-import player from "./player.module";
+import Device from "./device.module";
+import Player from "./player.module";
 
 
 import { MutationTypes as mutate } from './mutation';
@@ -32,7 +32,7 @@ interface IState
 }
 
 const _state:IState = {
-	_privateKey: "THIS IS PRIVATE",
+	_privateKey: "Root Store",
 
 	isFullscreen: false,
 };
@@ -92,13 +92,15 @@ const _mutations: MutationTree<any> & IMutations = {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  modules
 const _modules = {
-	device,
-	player,
+	device: Device,
+	player: Player,
 };
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  CONSTRUCTOR
-export default createStore({
+const _store:VuexStore<any> = createStore({
 	state: () => _state,
 	getters: _getters,
 	actions: _actions,
@@ -107,6 +109,13 @@ export default createStore({
 	strict: debug,
 	plugins: debug ? [createLogger()] : []
 })
+
+export default _store;
+
+export function useStore():any
+{
+	return _store;
+}
 
 // type Store = Omit<
 // 	VuexStore<State>,
