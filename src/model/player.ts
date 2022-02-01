@@ -11,16 +11,16 @@ export interface IPlayer
 	armies?: IArmy[];
 }
 
-export class PlayerVO implements IPlayer
-{
-	readonly id:string = "";
-	alias:string = "";
-	readonly games:IGame[] = [];
-	readonly factions:IFaction[] = [];
-	readonly armies:IArmy[] = [];
-
-	constructor(data: IPlayer)
-	{
-		Object.assign(this, data);
-	}
-}
+// export class PlayerVO implements IPlayer
+// {
+// 	readonly id:string = "";
+// 	alias:string = "";
+// 	readonly games:IGame[] = [];
+// 	readonly factions:IFaction[] = [];
+// 	readonly armies:IArmy[] = [];
+//
+// 	constructor(data: IPlayer)
+// 	{
+// 		Object.assign(this, data);
+// 	}
+// }

@@ -55,7 +55,7 @@ const _getters: GetterTree<any, any> & IGetters = {
 type AugmentedActionContext = {
 	commit<K extends keyof IMutations>(
 		key: K,
-		payload: Parameters<IMutations[K]>[1]
+		data: Parameters<IMutations[K]>[1]
 	): ReturnType<IMutations[K]>
 } & Omit<ActionContext<IState, IState>, 'commit'>
 

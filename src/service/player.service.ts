@@ -19,7 +19,14 @@ const _playerService:IPlayerService = {
 
 	getPlayerDetails: function(player_id:string):Promise<any>
 	{
-		return _axios.get(`/player/${player_id}/details`, {})
+		const _data:any = {
+			player: {
+				id: "666",
+				alias: "Osc",
+			}
+		}
+		return Promise.resolve({data: _data});
+		// return _axios.get(`/player/${player_id}/details`, {})
 	},
 
 	setInstantGameFavourite: function(player_id:string, id:string, favourite:boolean | number):Promise<any>

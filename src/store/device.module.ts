@@ -61,8 +61,8 @@ interface IMutations<S = IState>{
 	[mutate.IS_XL_UPDATED] (state:S, mediaQueryList:any):void;
 	[mutate.IS_PORTRAIT] (state:S, mediaQueryList:any):void;
 	[mutate.IS_LANDSCAPE] (state:S, mediaQueryList:any):void;
-	[mutate.URL_PARAMS_UPDATED] (state:S, payload:any):void;
-	[mutate.DEVICE_UPDATED] (state:S, payload:any):void;
+	[mutate.URL_PARAMS_UPDATED] (state:S, data:any):void;
+	[mutate.DEVICE_UPDATED] (state:S, data:any):void;
 }
 
 const _mutations: MutationTree<any> & IMutations = {
@@ -102,7 +102,7 @@ const _mutations: MutationTree<any> & IMutations = {
 type AugmentedActionContext = {
 	commit<K extends keyof IMutations>(
 		key: K,
-		payload: Parameters<IMutations[K]>[1]
+		data: Parameters<IMutations[K]>[1]
 	): ReturnType<IMutations[K]>
 	} & Omit<ActionContext<IState, IState>, 'commit'>
 

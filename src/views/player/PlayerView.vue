@@ -1,24 +1,24 @@
 <!--  Generated from Vue View template-->
 
 <template>
-  <div id="App" class="flex flex-col m-4 border border-stone-800 bg-amber-700">
-    <PlayerView class=""></PlayerView>
+  <div id="PlayerView" class="">
+    <h1 class="font-bold">PlayerView</h1>
   </div>
 </template>
 
 <!------------------------------------------------------------------------------------------------->
 
 <script setup lang="ts">
-  import PlayerView from "@/views/player/PlayerView.vue";
-  import {onMounted} from "vue";
-  import {Store} from "vuex";
-  import {ActionTypes as action} from "./store/actions";
-  import {useStore} from "./store/Store";
+  import { ref } from 'vue';
+  import { onMounted, onUpdated, onUnmounted } from 'vue';
+  import { Store } from "vuex";
+  import { useStore } from "@/store/Store";
+  import {ActionTypes as action} from "@/store/actions";
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Private
-  const _name: string = "App";
+  const _name: string = "PlayerView";
   const _store:Store<any> = useStore();
 
 
@@ -29,13 +29,13 @@
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //  Hooks
   onMounted(() => {
-    _store.dispatch(action.INIT_DEVICE);
-  });
+    _store.dispatch(action.GET_PLAYER, "666");
+  })
   // onUpdated(() => {
-  //   console.log(`App updated!`);
+  //   console.log(`PlayerView updated!`);
   // })
   // onUnmounted(() => {
-  //   console.log(`App unmounted!`);
+  //   console.log(`PlayerView unmounted!`);
   // })
 
 
