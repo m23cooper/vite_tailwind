@@ -1,6 +1,6 @@
 // Generated from Vuex Module template
 
-import {IPlayer, PlayerVO} from "../model/player";
+import {IPlayer, PlayerVO} from "@/model/player";
 import {ActionContext, ActionTree, GetterTree, MutationTree} from "vuex";
 
 import {ActionTypes as action} from "./actions";

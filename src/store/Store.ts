@@ -9,7 +9,7 @@ import {
 	DispatchOptions,
 } from 'vuex'
 import Device from "./device.module";
-import Player from "./player.module";
+import Player from "@/store/player.module";
 
 
 import { MutationTypes as mutate } from './mutation';
