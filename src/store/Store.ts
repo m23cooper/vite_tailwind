@@ -92,8 +92,8 @@ const _mutations: MutationTree<any> & IMutations = {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  modules
 const _modules = {
-	device: Device,
-	player: Player,
+	"device": Device,
+	"player": Player,
 };
 
 
@@ -109,8 +109,6 @@ const _store:VuexStore<any> = createStore({
 	strict: debug,
 	plugins: debug ? [createLogger()] : []
 })
-
-export default _store;
 
 export function useStore():any
 {
