@@ -3,23 +3,23 @@
 //  IMPORTS
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-//  Player
-export interface IPlayer
+//  Series
+export interface ISeries
 {
 	id: string;
 	name: string;
 	games?: IGame[];
 }
 
-export class PlayerVO implements IPlayer
+export class SeriesVO implements ISeries
 {
 	readonly id:string;
 	readonly name:string;
 	readonly games:IGame[];
 
-	constructor(data: IPlayer)
+	constructor(data: ISeries)
 	{
-		if (!data) throw new Error("data IPlayer is empty in PlayerVO constructor");
+		if (!data) throw new Error("data ISeries is empty in SeriesVO constructor");
 		this.id = data.id;
 		this.name = data.name;
 		this.games = !data.games ? [] : data.games.map( (data:IGame) => new GameVO(data) );

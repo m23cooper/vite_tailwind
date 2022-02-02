@@ -3,25 +3,25 @@
 //  IMPORTS
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-//  Player
-export interface IPlayer
+//  FactionType
+export interface IFactionType
 {
 	id: string;
 	name: string;
-	games?: IGame[];
+	gameID: string;
 }
 
-export class PlayerVO implements IPlayer
+export class FactionTypeVO implements IFactionType
 {
 	readonly id:string;
 	readonly name:string;
-	readonly games:IGame[];
+	readonly gameID: string;
 
-	constructor(data: IPlayer)
+	constructor(data: IFactionType)
 	{
-		if (!data) throw new Error("data IPlayer is empty in PlayerVO constructor");
+	    if (!data) throw new Error("data IFactionType is empty in FactionTypeVO constructor");
 		this.id = data.id;
 		this.name = data.name;
-		this.games = !data.games ? [] : data.games.map( (data:IGame) => new GameVO(data) );
+		this.gameID = data.gameID;
 	}
 }

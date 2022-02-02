@@ -2,26 +2,31 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  IMPORTS
 
+import { IUnitType, UnitTypeVO } from "./unittype";
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
-//  Player
-export interface IPlayer
+//  Unit
+export interface IUnit
 {
 	id: string;
 	name: string;
+	type?: IUnitType | null;
 	games?: IGame[];
 }
 
-export class PlayerVO implements IPlayer
+export class UnitVO implements IUnit
 {
-	readonly id:string;
-	readonly name:string;
-	readonly games:IGame[];
+	readonly id: string;
+	readonly name: string;
+	readonly type?: IUnitType | null;
+	readonly games: IGame[];
 
-	constructor(data: IPlayer)
+	constructor(data: IUnit)
 	{
-		if (!data) throw new Error("data IPlayer is empty in PlayerVO constructor");
+		if (!data) throw new Error("data IUnit is empty in UnitVO constructor");
 		this.id = data.id;
 		this.name = data.name;
+		this.type = !data.type ? null : new UnitTypeVO(data.type);
 		this.games = !data.games ? [] : data.games.map( (data:IGame) => new GameVO(data) );
 	}
 }

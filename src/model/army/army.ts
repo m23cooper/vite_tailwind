@@ -1,27 +1,27 @@
 // Generated from Vue VO template
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  IMPORTS
+import {IArmyType, ArmyTypeVO} from "./armytype";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-//  Player
-export interface IPlayer
+//  Army
+export interface IArmy
 {
 	id: string;
 	name: string;
-	games?: IGame[];
+	type? :IArmyType | null;
 }
 
-export class PlayerVO implements IPlayer
+export class ArmyVO implements IArmy
 {
 	readonly id:string;
 	readonly name:string;
-	readonly games:IGame[];
+	readonly type:IArmyType | null;
 
-	constructor(data: IPlayer)
+	constructor(data: IArmy)
 	{
-		if (!data) throw new Error("data IPlayer is empty in PlayerVO constructor");
 		this.id = data.id;
 		this.name = data.name;
-		this.games = !data.games ? [] : data.games.map( (data:IGame) => new GameVO(data) );
+		this.type = data.type ? new ArmyTypeVO(data.type) : null;
 	}
 }

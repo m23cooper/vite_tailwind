@@ -1,23 +1,28 @@
 // Generated from Vuex Module template
 
 
+import {IArmy} from "@/model/army/army";
+import {IFaction} from "@/model/game/faction";
+import {IGame} from "@/model/game/game";
 import {AxiosError, AxiosResponse} from "axios";
 import {ActionContext, ActionTree, GetterTree, MutationTree} from "vuex";
-import {IPlayer} from "@/model/player";
-import {playerService} from "@/service/player.service";
+import {IPlayer, PlayerVO} from "@/model/player";
+import {playerService} from "@/store/player/player.service";
 
-import {ActionTypes as action} from "./actions";
-import {MutationTypes as mutate} from "./mutation";
+import {ActionTypes as action} from "../actionTypes";
+import {MutationTypes as mutate} from "../mutationTypes";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  STATE
 interface IState extends IPlayer
 {
-
+	games: IGame[];
+	factions: IFaction[];
+	armies: IArmy[];
 }
 
 const _state:IState = {
-	alias: "",
+	name: "",
 	id: "",
 	games: [],
 	factions: [],
@@ -30,23 +35,23 @@ const _state:IState = {
 
 // type Getters = createMutableType<IState>;
 interface IGetters {
-	alias(state:IState):string;
+	name(state:IState):string;
 }
 
 const _getters: GetterTree<any, any> & IGetters = {
-	alias: (state:IState) => state.alias,
+	name: (state:IState) => state.name,
 };
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  Mutations
 interface IMutations<S = IState>{
-	[mutate.SET_PLAYER] (state:S, payload:IPlayer):void
+	[mutate.SET_PLAYER]: (state:S, payload:IPlayer) => void;
 }
 
 const _mutations: MutationTree<any> & IMutations = {
 	[mutate.SET_PLAYER] (state: IState, payload:IPlayer) {
-		state.alias = payload.alias;
+		state.name = payload.name;
 		state.id = payload.id;
 	},
 };
@@ -74,7 +79,7 @@ const _actions: ActionTree<any, any> & IActions = {
 		return playerService.getPlayerDetails(player_id)
 			.then(
 				(response: AxiosResponse) => {
-					commit(mutate.SET_PLAYER, response.data as IPlayer);
+					commit(mutate.SET_PLAYER, new PlayerVO(response.data.player));
 				},
 				(error: AxiosError) => {
 					dispatch(action.REPORT_ERROR, error);

@@ -4,8 +4,8 @@ import Bowser from "bowser";
 import {ActionContext, ActionTree, GetterTree, MutationTree} from "vuex";
 import { fromPairs as _fromPairs, map as _map} from "lodash-es";
 
-import {ActionTypes as action} from "./actions";
-import {MutationTypes as mutate} from "./mutation";
+import {ActionTypes as action} from "../actionTypes";
+import {MutationTypes as mutate} from "../mutationTypes";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  STATE
