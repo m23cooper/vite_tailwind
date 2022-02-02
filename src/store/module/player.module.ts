@@ -2,12 +2,12 @@
 
 
 import {IArmy} from "@/model/army/army";
-import {IFaction} from "@/model/game/faction";
+import {IFaction} from "@/model/faction/faction";
 import {IGame} from "@/model/game/game";
 import {AxiosError, AxiosResponse} from "axios";
 import {ActionContext, ActionTree, GetterTree, MutationTree} from "vuex";
 import {IPlayer, PlayerVO} from "@/model/player";
-import {playerService} from "@/store/player/player.service";
+import {playerService} from "@/service/player.service";
 
 import {ActionTypes as action} from "../actionTypes";
 import {MutationTypes as mutate} from "../mutationTypes";

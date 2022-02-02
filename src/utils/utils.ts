@@ -5,3 +5,4 @@ export type createMutableType<Type> = {
 export type createType<Type> = {
 	[Property in keyof Type]: Type[Property];
 };
+

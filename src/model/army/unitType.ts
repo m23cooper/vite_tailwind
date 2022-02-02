@@ -6,19 +6,22 @@
 //  UnitType
 export interface IUnitType
 {
-	id: string;
+	ID: string;
 	name: string;
+	gameID: string;
 }
 
 export class UnitTypeVO implements IUnitType
 {
-	readonly id:string;
+	readonly ID:string;
 	readonly name:string;
+	readonly gameID:string;
 
 	constructor(data: IUnitType)
 	{
 		if (!data) throw new Error("data IUnitType is empty in UnitTypeVO constructor");
-		this.id = data.id;
+		this.ID = data.ID;
 		this.name = data.name;
+		this.gameID = data.gameID;
 	}
 }

@@ -4,21 +4,21 @@
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  SeriesType
-export interface ISeriesType
+export interface IGenre
 {
-	id: string;
+	ID: string;
 	name: string;
 }
 
-export class SeriesTypeVO implements ISeriesType
+export class GenreVO implements IGenre
 {
-	readonly id:string;
+	readonly ID:string;
 	readonly name:string;
 
-	constructor(data: ISeriesType)
+	constructor(data: IGenre)
 	{
 		if (!data) throw new Error("data ISeriesType is empty in SeriesTypeVO constructor");
-		this.id = data.id;
+		this.ID = data.ID;
 		this.name = data.name;
 	}
 }

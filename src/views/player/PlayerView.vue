@@ -13,7 +13,7 @@
   import { onMounted, onUpdated, onUnmounted } from 'vue';
   import { Store } from "vuex";
   import { useStore } from "@/store/Store";
-  import {ActionTypes as action} from "@/store/actions";
+  import {ActionTypes as action} from "@/store/actionTypes";
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -8,12 +8,12 @@ import {
 	CommitOptions,
 	DispatchOptions,
 } from 'vuex'
-import Device from "./device.module";
-import Player from "@/store/player.module";
+import Device from "@/store/module/device.module";
+import Player from "@/store/module/player.module";
 
 
-import { MutationTypes as mutate } from './mutation';
-import { ActionTypes as action } from './actions';
+import { MutationTypes as mutate } from './mutationTypes';
+import { ActionTypes as action } from './actionTypes';
 
 import { config } from '../config';
 import { createType, createMutableType } from "../utils/utils";

@@ -2,31 +2,32 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  IMPORTS
 
+import {GameVO, IGame} from "@/model/game/game";
 import { IUnitType, UnitTypeVO } from "./unittype";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  Unit
 export interface IUnit
 {
-	id: string;
+	ID: string;
 	name: string;
+	gameID: string;
 	type?: IUnitType | null;
-	games?: IGame[];
 }
 
 export class UnitVO implements IUnit
 {
-	readonly id: string;
+	readonly ID: string;
 	readonly name: string;
-	readonly type?: IUnitType | null;
-	readonly games: IGame[];
+	readonly gameID: string;
+	readonly type: IUnitType | null;
 
 	constructor(data: IUnit)
 	{
 		if (!data) throw new Error("data IUnit is empty in UnitVO constructor");
-		this.id = data.id;
+		this.ID = data.ID;
 		this.name = data.name;
+		this.gameID = data.gameID;
 		this.type = !data.type ? null : new UnitTypeVO(data.type);
-		this.games = !data.games ? [] : data.games.map( (data:IGame) => new GameVO(data) );
 	}
 }

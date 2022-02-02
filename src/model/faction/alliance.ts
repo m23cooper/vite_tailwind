@@ -3,24 +3,24 @@
 //  IMPORTS
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-//  FactionType
-export interface IFactionType
+//  Alliance
+export interface IAlliance
 {
-	id: string;
+	ID: string;
 	name: string;
 	gameID: string;
 }
 
-export class FactionTypeVO implements IFactionType
+export class AllianceVO implements IAlliance
 {
-	readonly id:string;
+	readonly ID:string;
 	readonly name:string;
 	readonly gameID: string;
 
-	constructor(data: IFactionType)
+	constructor(data: IAlliance)
 	{
-	    if (!data) throw new Error("data IFactionType is empty in FactionTypeVO constructor");
-		this.id = data.id;
+	    if (!data) throw new Error("data IAlliance is empty in AllianceVO constructor");
+		this.ID = data.ID;
 		this.name = data.name;
 		this.gameID = data.gameID;
 	}

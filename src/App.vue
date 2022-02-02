@@ -12,7 +12,7 @@
   import PlayerView from "@/views/player/PlayerView.vue";
   import {onMounted} from "vue";
   import {Store} from "vuex";
-  import {ActionTypes as action} from "./store/actions";
+  import {ActionTypes as action} from "./store/actionTypes";
   import {useStore} from "./store/Store";
 
 
