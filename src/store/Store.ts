@@ -8,12 +8,12 @@ import {
 	CommitOptions,
 	DispatchOptions,
 } from 'vuex'
-import Device from "./device.module";
-import Player from "./player.module";
+import Device from "@/store/module/device.module";
+import Player from "@/store/module/player.module";
 
 
-import { MutationTypes as mutate } from './mutation';
-import { ActionTypes as action } from './actions';
+import { MutationTypes as mutate } from './mutationTypes';
+import { ActionTypes as action } from './actionTypes';
 
 import { config } from '../config';
 import { createType, createMutableType } from "../utils/utils";
@@ -55,7 +55,7 @@ const _getters: GetterTree<any, any> & IGetters = {
 type AugmentedActionContext = {
 	commit<K extends keyof IMutations>(
 		key: K,
-		payload: Parameters<IMutations[K]>[1]
+		data: Parameters<IMutations[K]>[1]
 	): ReturnType<IMutations[K]>
 } & Omit<ActionContext<IState, IState>, 'commit'>
 

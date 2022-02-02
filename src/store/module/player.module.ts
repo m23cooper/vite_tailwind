@@ -1,20 +1,32 @@
 // Generated from Vuex Module template
 
-import {IPlayer, PlayerVO} from "../model/player";
-import {ActionContext, ActionTree, GetterTree, MutationTree} from "vuex";
 
-import {ActionTypes as action} from "./actions";
-import {MutationTypes as mutate} from "./mutation";
+import {IArmy} from "@/model/army/army";
+import {IFaction} from "@/model/faction/faction";
+import {IGame} from "@/model/game/game";
+import {AxiosError, AxiosResponse} from "axios";
+import {ActionContext, ActionTree, GetterTree, MutationTree} from "vuex";
+import {IPlayer, PlayerVO} from "@/model/player";
+import {playerService} from "@/service/player.service";
+
+import {ActionTypes as action} from "../actionTypes";
+import {MutationTypes as mutate} from "../mutationTypes";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  STATE
-interface IState
+interface IState extends IPlayer
 {
-	_playerVO: IPlayer;
+	games: IGame[];
+	factions: IFaction[];
+	armies: IArmy[];
 }
 
-const _state:any = {
-	_playerVO: null,
+const _state:IState = {
+	name: "",
+	id: "",
+	games: [],
+	factions: [],
+	armies: [],
 };
 
 
@@ -23,24 +35,24 @@ const _state:any = {
 
 // type Getters = createMutableType<IState>;
 interface IGetters {
-	alias(state:IState):string;
+	name(state:IState):string;
 }
 
 const _getters: GetterTree<any, any> & IGetters = {
-	alias: (state:IState) => state._playerVO.alias,
+	name: (state:IState) => state.name,
 };
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  Mutations
 interface IMutations<S = IState>{
-	[mutate.SET_PLAYER] (state:S, payload:IPlayer):void
+	[mutate.SET_PLAYER]: (state:S, payload:IPlayer) => void;
 }
 
 const _mutations: MutationTree<any> & IMutations = {
 	[mutate.SET_PLAYER] (state: IState, payload:IPlayer) {
-		console.log ("SET_PLAYER", payload.alias);
-		state._playerVO = payload;
+		state.name = payload.name;
+		state.id = payload.id;
 	},
 };
 
@@ -57,17 +69,23 @@ type AugmentedActionContext = {
 interface IActions {
 	[action.GET_PLAYER](
 		{ commit }: AugmentedActionContext,
-	): Promise<void>,
+		player_id: string,
+	): Promise<any>,
 }
 
 const _actions: ActionTree<any, any> & IActions = {
-	[action.GET_PLAYER] ({ commit, } )	{
-		console.log("action GET_PLAYER",);
-		const newPlayer:IPlayer = new PlayerVO({id:"2", alias:"Helen"});
-		return new Promise((resolve) => {
-			commit(mutate.SET_PLAYER, newPlayer);
-			resolve();
-		})
+	[action.GET_PLAYER] ({ commit, dispatch, }, player_id:string )
+	{
+		return playerService.getPlayerDetails(player_id)
+			.then(
+				(response: AxiosResponse) => {
+					commit(mutate.SET_PLAYER, new PlayerVO(response.data.player));
+				},
+				(error: AxiosError) => {
+					dispatch(action.REPORT_ERROR, error);
+				}
+			)
+		;
 	},
 };
 
